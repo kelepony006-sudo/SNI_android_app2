@@ -1,0 +1,61 @@
+# .github/workflows/codeql-csharp.yml
+name: "CodeQL Security Scan - C#"
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main, develop ]
+  schedule:
+    - cron: '0 0 * * 0'  # Settimanale
+
+jobs:
+  analyze-csharp:
+    name: Analyze C# Code
+    runs-on: windows-latest  # Obbligatorio per C#/ .NET
+    permissions:
+      security-events: write
+      actions: read
+      contents: read
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0  # Importante per analisi accurate
+
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: |
+          6.0.x
+          7.0.x
+          8.0.x
+
+    - name: Initialize CodeQL
+      uses: github/codeql-action/init@v2
+      with:
+        languages: csharp
+        # Configurazioni specifiche C#
+        config-file: ./.github/codeql/csharp-config.yml
+        queries: security-extended,security-and-quality
+
+    - name: Restore Dependencies
+      run: dotnet restore
+
+    - name: Build Solution
+      run: |
+        # Trova automaticamente la solution
+        $solution = Get-ChildItem -Filter *.sln -Recurse | Select-Object -First 1
+        if ($solution) {
+          dotnet build $solution.FullName --configuration Release --no-restore
+        } else {
+          # Se non trova solution, build dei progetti
+          dotnet build --configuration Release --no-restore
+        }
+
+    - name: Perform CodeQL Analysis
+      uses: github/codeql-action/analyze@v2
+      with:
+        category: "/language:csharp"
+        upload-database: true
