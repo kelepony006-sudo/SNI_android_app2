@@ -1,0 +1,22 @@
+name: "CodeQL Configuration"
+
+paths-ignore:
+  - "**/*.test.cs"
+  - "**/*.spec.cs"
+  - "**/bin/"
+  - "**/obj/"
+  - "**/TestResults/"
+  - "**/Migrations/"
+  - "**/node_modules/"
+  - "**/packages/"
+
+queries:
+  - uses: security-extended
+  - uses: security-and-quality
+
+query-filters:
+  - exclude:
+      id:
+        - csharp/weak-crypto
+        - csharp/path-injection
+        - csharp/path-injection

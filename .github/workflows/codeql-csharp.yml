@@ -1,4 +1,4 @@
-# .github/workflows/codeql-csharp.yml
+﻿# .github/workflows/codeql-csharp.yml
 name: "CodeQL Security Scan - C#"
 
 on:
@@ -12,7 +12,7 @@ on:
 jobs:
   analyze-csharp:
     name: Analyze C# Code
-    runs-on: windows-latest  # Obbligatorio per C#/ .NET
+    runs-on: windows-latest
     permissions:
       security-events: write
       actions: read
@@ -33,29 +33,28 @@ jobs:
           8.0.x
 
     - name: Initialize CodeQL
-      uses: github/codeql-action/init@v2
+      uses: github/codeql-action/init@v3  # ⬅️ CORRETTO: v3 invece di v2
       with:
         languages: csharp
-        # Configurazioni specifiche C#
-        config-file: ./.github/codeql/csharp-config.yml
         queries: security-extended,security-and-quality
+        config-file: ./.github/codeql/csharp-config.yml
 
     - name: Restore Dependencies
       run: dotnet restore
 
     - name: Build Solution
       run: |
-        # Trova automaticamente la solution
+        # PowerShell su Windows-Latest
         $solution = Get-ChildItem -Filter *.sln -Recurse | Select-Object -First 1
         if ($solution) {
+          Write-Host "Building solution: $($solution.FullName)"
           dotnet build $solution.FullName --configuration Release --no-restore
         } else {
-          # Se non trova solution, build dei progetti
+          Write-Host "No .sln file found, building all projects"
           dotnet build --configuration Release --no-restore
         }
 
     - name: Perform CodeQL Analysis
-      uses: github/codeql-action/analyze@v2
+      uses: github/codeql-action/analyze@v3  # ⬅️ CORRETTO: v3 invece di v2
       with:
         category: "/language:csharp"
-        upload-database: true
