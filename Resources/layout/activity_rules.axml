@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#0a0a0a"
+    android:gravity="center">
+
+    <!-- Logo della Community -->
+    <ImageView
+        android:id="@+id/imgLogo"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_marginTop="40dp"
+        android:layout_marginBottom="40dp"
+        android:src="@drawable/icon_community" />
+
+    <!-- Titolo -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Forum"
+        android:textSize="24sp"
+        android:textColor="#ff0000"
+        android:textStyle="bold"
+        android:layout_marginBottom="20dp" />
+
+    <!-- Sottotitolo -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="I >I Regolamenti Dei Nostri Server"
+        android:textSize="16sp"
+        android:textColor="#ffffff"
+        android:layout_marginBottom="40dp" />
+
+    <!-- Pulsanti -->
+    <Button
+        android:id="@+id/btnCommunity" (chiedere a bit)
+        android:layout_width="250dp"
+        android:layout_height="50dp"
+        android:text="HOME"
+        android:layout_margin="10dp"
+        android:backgroundTint="#ff0000"
+        android:textColor="#ffffff" />
+
+    <Button
+        android:id="@+id/btnNews"
+        android:layout_width="250dp"
+        android:layout_height="50dp"
+        android:text="ULTIME NEWS"
+        android:layout_margin="10dp"
+        android:backgroundTint="#333333"
+        android:textColor="#ffffff" />
+
+	<Button
+        android:id="@+id/btnGallery"
+        android:layout_width="250dp"
+        android:layout_height="50dp"
+        android:text="GALLERIA"
+        android:layout_margin="10dp"
+        android:backgroundTint="#333333"
+        android:textColor="#ffffff" />
+   
+	<Button
+        android:id="@+id/btnCommunity"
+        android:layout_width="250dp"
+        android:layout_height="50dp"
+        android:text="VISITA IL SITO"
+        android:layout_margin="10dp"
+        android:backgroundTint="#333333"
+        android:textColor="#ffffff" />
+
+        <Button
+        android:id="@+id/btnCommunity"
+        android:layout_width="250dp"
+        android:layout_height="50dp"
+        android:text="VISITA IL SITO"
+        android:layout_margin="10dp"
+        android:backgroundTint="#333333"
+        android:textColor="#ffffff" />
+
+    <!-- Versione -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Versione 1.0.0"
+        android:textSize="12sp"
+        android:textColor="#666666"
+        android:layout_marginTop="40dp" />
+
+</LinearLayout>
