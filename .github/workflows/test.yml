@@ -12,61 +12,92 @@ jobs:
     runs-on: self-hosted
 
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout repository
+        uses: actions/checkout@v4
         with:
           clean: false
 
-      # ---- C / C++ ----
-      - name: Analyze C/C++
+      # --------------------
+      # C / C++
+      # --------------------
+      - name: Analyze C / C++
         shell: powershell
         run: |
           $files = Get-ChildItem -Recurse -Include *.c,*.cpp -ErrorAction SilentlyContinue
-          if ($files) {
-            clang-tidy $files.FullName --quiet
-          } else {
-            echo "No C/C++ files found"
+          if (-not $files) {
+            Write-Host "No C/C++ files found"
+            exit 0
           }
 
-      # ---- CMake ----
+          if (Get-Command clang-tidy -ErrorAction SilentlyContinue) {
+            clang-tidy $files.FullName --quiet
+          } else {
+            Write-Host "clang-tidy not installed"
+          }
+
+      # --------------------
+      # CMake
+      # --------------------
       - name: Analyze CMake
         shell: powershell
         run: |
-          if (Test-Path "CMakeLists.txt") {
-            cmakelint CMakeLists.txt
-          } else {
-            echo "No CMake files"
+          if (-not (Test-Path "CMakeLists.txt")) {
+            Write-Host "No CMakeLists.txt found"
+            exit 0
           }
 
-      # ---- Dart ----
+          if (Get-Command cmakelint -ErrorAction SilentlyContinue) {
+            cmakelint CMakeLists.txt
+          } else {
+            Write-Host "cmakelint not installed"
+          }
+
+      # --------------------
+      # Dart
+      # --------------------
       - name: Analyze Dart
         shell: powershell
         run: |
           $files = Get-ChildItem -Recurse -Include *.dart -ErrorAction SilentlyContinue
-          if ($files) {
-            dart analyze
-          } else {
-            echo "No Dart files"
+          if (-not $files) {
+            Write-Host "No Dart files found"
+            exit 0
           }
 
-      # ---- HTML ----
+          if (Get-Command dart -ErrorAction SilentlyContinue) {
+            dart analyze
+          } else {
+            Write-Host "Dart SDK not installed"
+          }
+
+      # --------------------
+      # HTML
+      # --------------------
       - name: Analyze HTML
         shell: powershell
         run: |
           $files = Get-ChildItem -Recurse -Include *.html -ErrorAction SilentlyContinue
-          if ($files) {
-            htmlhint "**/*.html"
-          } else {
-            echo "No HTML files"
+          if (-not $files) {
+            Write-Host "No HTML files found"
+            exit 0
           }
 
-      # ---- Swift (best effort) ----
-      - name: Analyze Swift
+          if (Get-Command htmlhint -ErrorAction SilentlyContinue) {
+            htmlhint "**/*.html"
+          } else {
+            Write-Host "htmlhint not installed"
+          }
+
+      # --------------------
+      # Swift (Windows limit)
+      # --------------------
+      - name: Detect Swift files
         shell: powershell
         continue-on-error: true
         run: |
           $files = Get-ChildItem -Recurse -Include *.swift -ErrorAction SilentlyContinue
           if ($files) {
-            echo "Swift files detected (analysis limited on Windows)"
+            Write-Host "Swift files detected (analysis not supported on Windows)"
           } else {
-            echo "No Swift files"
+            Write-Host "No Swift files found"
           }
