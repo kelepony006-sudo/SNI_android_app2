@@ -39,6 +39,8 @@ flutter:
 
   assets:
     - assets/images/sni_logo.png
+    - assets/images/instant_pannello_partner.png
+    - assets/images/zap_pannello_partner.png
 
 # ================= APP ICON =================
 flutter_icons:

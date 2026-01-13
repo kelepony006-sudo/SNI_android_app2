@@ -28,9 +28,7 @@ class PartnerPage extends StatelessWidget {
             // ===== INSTANT GAMING =====
             PartnerCard(
               name: 'Instant Gaming',
-              description:
-                  'Acquista videogiochi digitali a prezzi scontati '
-                  'supportando la community.',
+              imageAsset: 'assets/images/instant_pannello_partner.png',
               url: 'https://www.instant-gaming.com/?igr=bitpredator',
             ),
 
@@ -39,9 +37,7 @@ class PartnerPage extends StatelessWidget {
             // ===== ZAP HOSTING =====
             PartnerCard(
               name: 'ZAP-Hosting',
-              description:
-                  'Hosting professionale per server di gioco, '
-                  'VPS e infrastrutture dedicate.',
+              imageAsset: 'assets/images/zap_pannello_partner.png',
               url:
                   'https://zap-hosting.com/a/0dd10586c1b68c4e7ceab6cba0ce2848ed946691?voucher=SkullNetwork-a-6091',
             ),
@@ -54,14 +50,16 @@ class PartnerPage extends StatelessWidget {
 
 class PartnerCard extends StatelessWidget {
   final String name;
-  final String description;
+  final String? description;
   final String url;
+  final String? imageAsset;
 
   const PartnerCard({
     super.key,
     required this.name,
-    required this.description,
+    this.description,
     required this.url,
+    this.imageAsset,
   });
 
   @override
@@ -77,9 +75,8 @@ class PartnerCard extends StatelessWidget {
               name,
               style: Theme.of(context).textTheme.titleLarge,
             ),
-            const SizedBox(height: 10),
+            const SizedBox(height: 12),
 
-            // 🔹 TESTO CLICCABILE
             InkWell(
               onTap: () async {
                 final uri = Uri.parse(url);
@@ -96,16 +93,22 @@ class PartnerCard extends StatelessWidget {
                   );
                 }
               },
-              child: Text(
-                description,
-                style: Theme.of(context)
-                    .textTheme
-                    .bodyMedium
-                    ?.copyWith(
-                      color: Colors.blue,
-                      decoration: TextDecoration.underline,
+              child: imageAsset != null
+                  ? Image.asset(
+                      imageAsset!,
+                      height: 80,
+                      fit: BoxFit.contain,
+                    )
+                  : Text(
+                      description ?? '',
+                      style: Theme.of(context)
+                          .textTheme
+                          .bodyMedium
+                          ?.copyWith(
+                            color: Colors.blue,
+                            decoration: TextDecoration.underline,
+                          ),
                     ),
-              ),
             ),
           ],
         ),
