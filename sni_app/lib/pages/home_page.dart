@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../core/constants.dart';
-import 'partner_page.dart';
+import './partner_page.dart';
+import './settings_page.dart';
+
+// ===== HOME PAGE =====
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -62,7 +65,13 @@ class HomePage extends StatelessWidget {
               leading: const Icon(Icons.settings),
               title: const Text('Impostazioni'),
               onTap: () {
-                Navigator.pop(context);
+                Navigator.pop(context); // chiude il drawer
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (_) => const SettingsPage(),
+                  ),
+                );
               },
             ),
             ListTile(
