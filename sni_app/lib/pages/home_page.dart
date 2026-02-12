@@ -86,6 +86,18 @@ class HomePage extends StatelessWidget {
                 );
               },
             ),
+            ListTile(
+              leading: const Icon(Icons.bug_report),
+              title: Text(
+                Localizations.localeOf(context).languageCode == 'it'
+                    ? 'Segnala un bug'
+                    : 'Report a bug',
+              ),
+              onTap: () {
+                Navigator.pop(context);
+                _openWebsite(context, AppConstants.bugReportUrl);
+              },
+            ),
           ],
         ),
       ),

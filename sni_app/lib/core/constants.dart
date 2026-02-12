@@ -1,6 +1,8 @@
 class AppConstants {
   static const String appName = '';
   static const String communityName = 'Skull Network Italia';
+  static const String bugReportUrl =
+      'https://github.com/bitpredator/SNI_android_app2/issues/new/choose';
 
   static const String description = '''
 Skull Network Italia è la casa virtuale per tutti gli appassionati di videogiochi che cercano esperienze immersive, realistiche e sempre nuove.
